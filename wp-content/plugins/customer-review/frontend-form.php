@@ -36,41 +36,54 @@ if (is_user_logged_in()) {
                 </div>
             </form>
         </div>
+        <?php
+            $args = array(
+            'order' => 'DESC',
+            'post_id' => 1,
+            'post__in' => '',
+            'comment_type'=>''
+            );
+        $comment_data = get_comments( $args ); ?>
         <div id="comments1">
             <div id="content" role="main">
                 <h2>1 review for<span> HP Pavilion m6</span></h2>
                 <ol class="commentlist">
-                    <li class="comment byuser comment-author-admin bypostauthor even thread-even depth-1" style="list-style: none;">
-                        <div id="comment-38" class="comment_container">
-                            <img src="http://1.gravatar.com/avatar/d75ba99d5f66dfe5cab9c37e95bfaa9f?s=60&d=mm&r=g" srcset="http://1.gravatar.com/avatar/d75ba99d5f66dfe5cab9c37e95bfaa9f?s=120&d=mm&r=g 2x" class="avatar avatar-60 photo" height="45" width="45">
-                            <div class="comment-text" style="width: 95%; float: right; border-radius: 5px; border: 1px solid; padding: 10px 0px 0 15px;">
-                                <div class="star-rating" style="float: right;">
-                                    <span style="width:100%">
-                                        <fieldset class="rating" style="padding:0; margin: 0;">
-                                            <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                            <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                            <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                            <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                            <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                            <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                            <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                            <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                            <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                            <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                        </fieldset>
-                                        <strong></strong>
-                                    </span>
+                    <li class="comment byuser comment-author-admin bypostauthor even thread-even depth-1" style="list-style: none;"> <?php 
+                        $counter=1; 
+                        foreach($comment_data as $data) :
+                            $user_rating = get_comment_meta($data->comment_ID,'rating',TRUE); ?>
+                            <div id="comment-38" class="comment_container">
+                                <?php echo get_avatar($data->comment_author_email,45); ?>
+                                <div class="comment-text" style="width: 95%; float: right; border-radius: 5px; border: 1px solid; padding: 10px 0px 0 15px;">
+                                    <div class="star-rating" style="float: right;">
+                                        <span style="width:100%">
+                                            <fieldset class="rating" style="padding:0; margin: 0;">
+                                                <input type="radio" id="star5" name="rating<?php echo $counter; ?>" value="5" <?php if($user_rating == 5) echo "checked"; ?> /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                                                <input type="radio" id="star4half" name="rating<?php echo $counter; ?>" value="4 and a half" <?php if($user_rating == 4) echo "checked"; ?> /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                                                <input type="radio" id="star4" name="rating<?php echo $counter; ?>" value="4" <?php if($user_rating == 4) echo "checked"; ?> /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                                                <input type="radio" id="star3half" name="rating<?php echo $counter; ?>" value="3 and a half" <?php if($user_rating == 3) echo "checked"; ?> /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                                                <input type="radio" id="star3" name="rating<?php echo $counter; ?>" value="3" <?php if($user_rating == 3) echo "checked"; ?> /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                                                <input type="radio" id="star2half" name="rating<?php echo $counter; ?>" value="2 and a half" <?php if($user_rating == 2) echo "checked"; ?> /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                                                <input type="radio" id="star2" name="rating<?php echo $counter; ?>" value="2" <?php if($user_rating == 2) echo "checked"; ?> /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                                                <input type="radio" id="star1half" name="rating<?php echo $counter; ?>" value="1 and a half" <?php if($user_rating == 1) echo "checked"; ?> /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                                                <input type="radio" id="star1" name="rating<?php echo $counter; ?>" value="1" <?php if($user_rating == 1) echo "checked"; ?> /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                                                <input type="radio" id="starhalf" name="rating<?php echo $counter; ?>" value="half" <?php if($user_rating == 1) echo "checked"; ?> /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                                            </fieldset>
+                                            <strong></strong>
+                                        </span>
+                                    </div>
+                                    <p class="meta">
+                                        <strong class="woocommerce-review__author" itemprop="author"><?php echo $data->comment_author; ?></strong>
+                                        <span class="woocommerce-review__dash">-</span>
+                                        <time class="woocommerce-review__published-date" itemprop="datePublished" datetime="2017-05-26T06:50:34+00:00"><?php echo $data->comment_date; ?></time>
+                                    </p>
+                                    <div class="description">
+                                        <p><?php echo $data->comment_content; ?></p>
+                                    </div>
                                 </div>
-                                <p class="meta">
-                                    <strong class="woocommerce-review__author" itemprop="author">Chintan Machhi</strong>
-                                    <span class="woocommerce-review__dash">-</span>
-                                    <time class="woocommerce-review__published-date" itemprop="datePublished" datetime="2017-05-26T06:50:34+00:00">26/05/2017</time>
-                                </p>
-                                <div class="description">
-                                    <p>Nice</p>
-                                </div>
-                            </div>
-                        </div>
+                            </div> <?php 
+                            $counter++; 
+                        endforeach; ?>
                     </li>
                 </ol>
             </div>
@@ -93,7 +106,7 @@ if (isset($_POST["rate"])) {
             'comment_author_email' => $email,
             'comment_author_url' => $email,
             'comment_content' => $review,
-            'comment_type' => '',
+            'comment_type'=>'author',
             'comment_parent' => 0,
             'user_id' => 1,
             'comment_author_IP' => '127.0.0.1',
