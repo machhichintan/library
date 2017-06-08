@@ -45,8 +45,5 @@
     .rating > input:checked ~ label:hover,
     .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
     .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
-    div#comments1 {
-    border: 1px solid #dddddd;
-    padding: 0 10px 0 15px;
-    margin-top: 100px;
-}
+    div#comments1 { padding: 0 10px 0 15px; margin-top: 100px; }
+    div#comment-38 { width: 100%;  float: left;  margin: 5px 0; }
