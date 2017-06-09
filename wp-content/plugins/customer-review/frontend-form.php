@@ -108,7 +108,7 @@ if (isset($_POST["rate"])) {
             'comment_content' => $review,
             'comment_type'=>'author',
             'comment_parent' => 0,
-            'user_id' => 1,
+            'user_id' => $user_id,
             'comment_author_IP' => '127.0.0.1',
             'comment_agent' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.10) Gecko/2009042316 Firefox/3.0.10 (.NET CLR 3.5.30729)',
             'comment_date' => $time,
