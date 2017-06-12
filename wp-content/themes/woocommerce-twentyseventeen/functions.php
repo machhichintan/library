@@ -412,7 +412,7 @@ add_action('wp_head', 'twentyseventeen_colors_css_wrap');
 function twentyseventeen_scripts() {
     // Add custom fonts, used in the main stylesheet.
     wp_enqueue_style('twentyseventeen-fonts', twentyseventeen_fonts_url(), array(), null);
-
+    
     // Theme stylesheet.
     wp_enqueue_style('twentyseventeen-style', get_stylesheet_uri());
 
@@ -446,11 +446,14 @@ function twentyseventeen_scripts() {
         $twentyseventeen_l10n['expand'] = __('Expand child menu', 'twentyseventeen');
         $twentyseventeen_l10n['collapse'] = __('Collapse child menu', 'twentyseventeen');
         $twentyseventeen_l10n['icon'] = twentyseventeen_get_svg(array('icon' => 'angle-down', 'fallback' => true));
+        wp_register_script('jquery-scrollto', get_theme_file_uri('/assets/js/price_slider.js'), true);
+        
     }
 
     wp_enqueue_script('twentyseventeen-global', get_theme_file_uri('/assets/js/global.js'), array('jquery'), '1.0', true);
 
     wp_enqueue_script('jquery-scrollto', get_theme_file_uri('/assets/js/jquery.scrollTo.js'), array('jquery'), '2.1.2', true);
+    
 
     wp_localize_script('twentyseventeen-skip-link-focus-fix', 'twentyseventeenScreenReaderText', $twentyseventeen_l10n);
 
@@ -764,7 +767,7 @@ function current_user_apply_coupon(){
     }
     wc_add_notice(__('','woocommerce'));
 }
-add_action('woocommerce_applied_coupon','current_user_apply_coupon');
+add_action('woocommerce_applied_coupon','current_user_apply_coupon',20);
 //current user coupon apply closed 
 
 

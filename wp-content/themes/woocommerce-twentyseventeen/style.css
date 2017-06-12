@@ -4269,12 +4269,12 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
     transition:all 0.5s ease;
 }
 
-.woocommerce ul.products li.product:hover, .woocommerce-page ul.products li.product:hover {
+/*.woocommerce ul.products li.product:hover, .woocommerce-page ul.products li.product:hover {
     border-radius: 5px;
     height: 461px;
     border: 1px solid;
     transform:scale(1.1);
-}
+}*/
 .woocommerce ul.products li.product .button {
    margin: 0 0px 10px 10px;
 }
@@ -4359,5 +4359,46 @@ div#review_form{
 }
 .woocommerce #review_form #respond{
     margin: 0 10px;
+}
+
+div#ajax-filter {
+    width: 20%;
+    padding: 220px 0px 0 25px;
+    /* margin-left: 8px; */
+    float: right;
+}
+div#ajax-filter {
+    width: 19%;
+    padding: 220px 0px 0 0px;
+    /* margin-left: 8px; */
+    float: left;
+}
+div#slider-range{
+        width: 90%;
+    float: left;
+}
+div#content {
+    width: 80%;
+    float: right;
+}
+div#category {
+    margin: 8px 0px 20px;
+    border: 1px solid #dddddd;
+}
+select#category {
+    margin: 10px 0px 10px 6px;
+    width: 95%;
+}
+.range1 {
+    width: 100%;
+    float: right;
+    border: 1px solid #dddddd;
+    padding: 20px 8px;
+}
+.ui-slider-range.ui-corner-all.ui-widget-header{
+    background-color: #369dba;
+}
+label {
+    margin: 10px 5px 0px;
 }
 //mystyle closed
