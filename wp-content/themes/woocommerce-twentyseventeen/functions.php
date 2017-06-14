@@ -447,6 +447,8 @@ function twentyseventeen_scripts() {
         $twentyseventeen_l10n['collapse'] = __('Collapse child menu', 'twentyseventeen');
         $twentyseventeen_l10n['icon'] = twentyseventeen_get_svg(array('icon' => 'angle-down', 'fallback' => true));
         wp_register_script('jquery-scrollto', get_theme_file_uri('/assets/js/price_slider.js'), true);
+        wp_localize_script('jquery-scrollto', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+        wp_enqueue_script('jquery-scrollto');
         
     }
 
@@ -770,7 +772,7 @@ function current_user_apply_coupon(){
 add_action('woocommerce_applied_coupon','current_user_apply_coupon',20);
 //current user coupon apply closed 
 
-
+//less then five hundrad coupon apply
 function discount_coupon_less_then_five_hundrad (){
     global $woocommerce;
     global $current_user;
@@ -789,7 +791,7 @@ function discount_coupon_less_then_five_hundrad (){
         }
     }
     $cart_total = $cart_total + $total_discount;
-    if($cart_total < 499)
+    if($cart_total < 500)
     {
         WC()->cart->remove_coupons($coupon_name);
         return;
@@ -803,18 +805,76 @@ function discount_coupon_less_then_five_hundrad (){
     
 }
 add_action('woocommerce_cart_updated','discount_coupon_less_then_five_hundrad');
+//less then five hundrad coupon apply closed
 
+//trigger onchange qty
 add_action( 'wp_footer', 'cart_update_qty_script' );
 function cart_update_qty_script() {
-if (is_cart()) :
-?>
-<script>
-        jQuery('div.woocommerce').on('change', '.quantity', function(){
-            jQuery(".qty").mouseout(function() {
-                jQuery("[name='update_cart']").trigger("click");
+    if (is_cart()) : ?>
+    <script>
+            jQuery('div.woocommerce').on('change', '.quantity', function(){
+                jQuery(".qty").mouseout(function() {
+                    jQuery("[name='update_cart']").trigger("click");
+                });
             });
-        });
-</script>
-<?php
-endif;
+    </script>
+    <?php
+    endif;
 }
+//trigger onchange qty closed
+function product_filter() {
+    $price = $_REQUEST['price'];
+    $category = $_REQUEST["category"];
+    $price = str_replace("$", "", $price);
+    $price = explode("-", $price);
+    $min_price = intval($price[0]);
+    $max_price = intval($price[1]);
+    
+    $params = array(
+        'posts_per_page' => -1,
+        'post_type' => array('product','product_variation'),
+        'post_status' => 'publish',
+        
+    );
+    if (!empty($category)) {
+        $params['tax_query'] = array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field' => 'slug',
+                'terms' => $category,
+                
+            ),
+        );
+    }
+    if (!empty($min_price) && !empty($max_price)) {
+        $params['meta_query'] = array(
+            array(
+                'key' => '_sale_price',
+                'value' => array($min_price, $max_price),
+                'compare' => 'between',
+                'type' => 'numeric',
+            ),
+        );
+    }
+    
+    $loop = new WP_Query($params);
+    while ($loop->have_posts()) : $loop->the_post();
+        global $product; ?>
+        <li class="product">    
+            <h3><?php the_title(); ?></h3>
+            <a href="<?php echo get_permalink($loop->post->ID) ?>" title="<?php echo esc_attr($loop->post->post_title ? $loop->post->post_title : $loop->post->ID); ?>"> <?php 
+                woocommerce_show_product_sale_flash($post, $product); 
+                if (has_post_thumbnail($loop->post->ID))
+                    echo get_the_post_thumbnail($loop->post->ID, 'shop_catalog');
+                else
+                    echo '<img src="' . woocommerce_placeholder_img_src() . '" alt="Placeholder" width="300px" height="300px" />'; ?>
+                <span class="price"><?php echo $product->get_price_html(); ?></span>                    
+            </a> <?php 
+            woocommerce_template_loop_add_to_cart($loop->post, $product); ?>
+        </li> <?php 
+    endwhile;
+    wp_reset_query(); 
+    exit();
+}
+add_action('wp_ajax_product_filter_by_price', 'product_filter');
+add_action('wp_ajax_nopriv_product_filter_by_price', 'product_filter');

@@ -32,7 +32,7 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
         </div>
         <div class="range1">
             <label for="amount">Price :</label>
-            <input type="text" id="amount" readonly style="border:0; color:#77a464; font-weight:bold;width: 100%;padding: 0 0 15px;">
+            <input type="text" id="amount" style="border:0; color:#77a464; font-weight:bold;width: 100%;padding: 0 0 15px;">
             <div id="slider-range" style="width: 90%;float: left;background-color: #dddddd;"></div>
         </div>
     </div> <?php
