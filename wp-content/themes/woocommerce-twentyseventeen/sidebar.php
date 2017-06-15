@@ -11,6 +11,7 @@
  */
 
 if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+    if(is_shop()){
     $args = array(
         'orderby' => $orderby,
         'order' => $order,
@@ -37,6 +38,7 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
         </div>
     </div> <?php
     return;
+}
 }
 ?>
 

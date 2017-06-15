@@ -733,21 +733,17 @@ function current_user_coupon_expiry(){
 add_action('wp_logout','current_user_coupon_expiry');
 //user logout coupon delete closed
 
-
-//function current_user_coupon_apply() {
-//    global $woocommerce;
-//    global $current_user;
-//    get_currentuserinfo();
-//    $coupon_code = $current_user->user_login;
-//    
-//    if ($woocommerce->cart->has_discount( $coupon_code )) {
-//        return;
-//    }else{
-//        $woocommerce->cart->add_discount( $coupon_code );
-//    }
-//    
-//}
-//add_action('woocommerce_before_cart', 'current_user_coupon_apply');
+//order place coupon remove
+function checkout_order_user_delete_coupon() {
+   global $current_user;
+   get_currentuserinfo();
+   $coupon_code = $current_user->user_login; // Code
+   $coupon_data = new WC_Coupon($coupon_code);
+   if (!empty($coupon_data->id)) {
+       wp_delete_post($coupon_data->id);
+   }
+}
+add_action('woocommerce_checkout_order_processed', 'checkout_order_user_delete_coupon', 10);
 
 //current user coupon apply
 function current_user_apply_coupon(){
@@ -863,7 +859,7 @@ function product_filter() {
         <li class="product">    
             <h3><?php the_title(); ?></h3>
             <a href="<?php echo get_permalink($loop->post->ID) ?>" title="<?php echo esc_attr($loop->post->post_title ? $loop->post->post_title : $loop->post->ID); ?>"> <?php 
-                woocommerce_show_product_sale_flash($post, $product); 
+                woocommerce_show_product_sale_flash($post, $product);
                 if (has_post_thumbnail($loop->post->ID))
                     echo get_the_post_thumbnail($loop->post->ID, 'shop_catalog');
                 else
@@ -871,10 +867,10 @@ function product_filter() {
                 <span class="price"><?php echo $product->get_price_html(); ?></span>                    
             </a> <?php 
             woocommerce_template_loop_add_to_cart($loop->post, $product); ?>
-        </li> <?php 
+        </li> <?php
     endwhile;
-    wp_reset_query(); 
+    wp_reset_query(); //query reset
     exit();
 }
-add_action('wp_ajax_product_filter_by_price', 'product_filter');
-add_action('wp_ajax_nopriv_product_filter_by_price', 'product_filter');
+add_action('wp_ajax_product_filter_by_price', 'product_filter'); // use for back-end
+add_action('wp_ajax_nopriv_product_filter_by_price', 'product_filter'); //use for Front-end

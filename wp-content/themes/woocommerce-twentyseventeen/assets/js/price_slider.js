@@ -5,13 +5,14 @@ jQuery(function () {
         max: 1500,
         change: function () {
             var val = jQuery("#amount").val();
+            var cate = jQuery("#category option:selected").val();
             jQuery.ajax({
                 type: "POST",
                 datatype: "json",
                 url:ajax_object.ajax_url,
                 beforeSend: function () {
                 },
-                data: {action: "product_filter_by_price", price: val},
+                data: {action: "product_filter_by_price", price: val, categoris:cate},
                 success: function (data) {
                     jQuery("ul.products").html(data);
                 }
