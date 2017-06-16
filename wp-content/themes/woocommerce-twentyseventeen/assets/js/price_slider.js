@@ -1,5 +1,4 @@
 jQuery(function () {
-
     var ajax_call_func = function () {
         var val = jQuery("#amount").val();
         var cate = jQuery("#category option:selected").val();
@@ -18,8 +17,8 @@ jQuery(function () {
     }
     jQuery("#slider-range").slider({
         range: true,
-        min: 100,
-        max: 1500,
+        min: 5,
+        max: 1200,
         change: ajax_call_func,
         values: [100, 1500],
         slide: function (event, ui) {

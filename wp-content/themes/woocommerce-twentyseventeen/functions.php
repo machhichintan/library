@@ -868,8 +868,8 @@ function product_filter() {
             woocommerce_template_loop_add_to_cart($loop->post, $product); ?>
         </li> <?php
     endwhile;
-    wp_reset_query(); //query reset
+    wp_reset_query(); //variable stor data reset
     exit();
 }
-add_action('wp_ajax_product_filter_by_price', 'product_filter'); // use login 
-add_action('wp_ajax_nopriv_product_filter_by_price', 'product_filter'); //use logout
+add_action('wp_ajax_product_filter_by_price', 'product_filter'); // user login work in hook
+add_action('wp_ajax_nopriv_product_filter_by_price', 'product_filter'); //user logout work in hook 
