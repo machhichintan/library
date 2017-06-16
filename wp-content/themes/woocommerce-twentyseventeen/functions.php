@@ -783,7 +783,6 @@ function discount_coupon_less_then_five_hundrad (){
         foreach($current_user_coupon as $user_coupon){
             $id = $user_coupon->id;
             $total_discount += get_post_meta($id,'coupon_amount',TRUE);
-            
         }
     }
     $cart_total = $cart_total + $total_discount;
