@@ -830,7 +830,6 @@ function product_filter() {
         'posts_per_page' => -1,
         'post_type' => array('product','product_variation'),
         'post_status' => 'publish',
-        
     );
     if (!empty($category)) {
         $params['tax_query'] = array(
@@ -872,5 +871,5 @@ function product_filter() {
     wp_reset_query(); //query reset
     exit();
 }
-add_action('wp_ajax_product_filter_by_price', 'product_filter'); // use for back-end
-add_action('wp_ajax_nopriv_product_filter_by_price', 'product_filter'); //use for Front-end
+add_action('wp_ajax_product_filter_by_price', 'product_filter'); // use login 
+add_action('wp_ajax_nopriv_product_filter_by_price', 'product_filter'); //use logout

@@ -25,7 +25,7 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
     <div id="ajax-filter">
         <div id='category'> <label for="amount">Select Category </label> 
             <select name='category' id="category">
-                <option> Select Category </option>
+                <option value=""> Select Category </option>
                 <?php foreach ($categories as $category) : ?> 
                     <option value="<?php echo $category->slug; ?>"> <?php echo $category->name; ?> </option>
                 <?php endforeach; ?>
