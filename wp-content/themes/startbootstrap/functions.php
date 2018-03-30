@@ -891,4 +891,18 @@ function recent_posts_function(){
   add_shortcode('recent-demo', 'front_end_desinging');
 }
 add_action('init','recent_posts_function');
+
+
+//Contact form redirect other page
+add_action( 'wp_footer', 'mycustom_wp_footer' );
+ 
+function mycustom_wp_footer() {
+?>
+<script type="text/javascript">
+document.addEventListener( 'wpcf7mailsent', function( event ) {
+       location = 'https://www.example.com/thank-you/';
+}, false );
+</script>
+<?php
+}
 ?>
